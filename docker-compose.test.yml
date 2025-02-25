@@ -1,0 +1,33 @@
+version: '3.8' #remove this line.
+services:
+  postgres-test-db:
+    image: postgres:15
+    container_name: postgres-test-db
+    env_file:
+      - .env.test 
+    ports:
+      - "5433:5432"
+    networks:
+      - test-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U testuser -d testdb"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  news-scraper-test-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres-test-db
+    env_file:
+      - .env.test 
+    ports:
+      - "3001:3000"
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge

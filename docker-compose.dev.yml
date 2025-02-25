@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:15
+    container_name: postgres-db
+    env_file:
+      - .env.dev 
+    ports:
+      - "5432:5432"
+    networks:
+      - scraper-network
+
+  news-scraper-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: news-scraper-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env.dev
+    networks:
+      - scraper-network
+
+networks:
+  scraper-network:
+    driver: bridge
