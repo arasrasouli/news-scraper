@@ -5,7 +5,7 @@ services:
     image: postgres:15
     container_name: postgres-db
     env_file:
-      - .env.dev 
+      - .env.prod 
     ports:
       - "5432:5432"
     networks:
@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     env_file:
-      - .env.dev
+      - .env.prod
     networks:
       - scraper-network
 
