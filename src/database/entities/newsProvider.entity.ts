@@ -1,13 +1,10 @@
 import { Field, ObjectType } from '@nestjs/graphql';
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column } from 'typeorm';
+import { CommonEntity } from './common.entity';
 
 @ObjectType()
 @Entity()
-export class NewsProvider {
-  @Field(() => String)
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+export class NewsProvider extends CommonEntity {
   @Field(() => String)
   @Column()
   name: string;
