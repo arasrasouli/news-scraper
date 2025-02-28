@@ -3,10 +3,19 @@
 # ------------------------------------------------------
 
 type NewsProvider {
-  id: String!
+  id: ID!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  createDate: DateTime!
+  modifyDate: DateTime!
   name: String!
   url: String!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type AboutModel {
   title: String!
@@ -15,10 +24,13 @@ type AboutModel {
 }
 
 type Query {
+  getNewsProvider(id: String!): NewsProvider!
   getNewsProviders: [NewsProvider!]!
   about: AboutModel!
 }
 
 type Mutation {
-  addNewsProvider(name: String!, url: String!): NewsProvider!
+  createNewsProvider(name: String!, url: String!): NewsProvider!
+  updateNewsProvider(id: String!, name: String!, url: String!): NewsProvider!
+  deleteNewsProvider(id: String!): Boolean!
 }
