@@ -10,6 +10,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validate } from './env.validation'; 
 import { NewsProvider } from './database/entities/newsProvider.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { NewsProvider } from './database/entities/newsProvider.entity';
       validate: validate, 
       isGlobal: true,
     }),
+    AuthModule,
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -37,6 +39,7 @@ import { NewsProvider } from './database/entities/newsProvider.entity';
     }),
     NewsProviderModule,
     AboutModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -23,6 +23,10 @@ type AboutModel {
   version: String!
 }
 
+type AuthResponse {
+  access_token: String!
+}
+
 type Query {
   getNewsProvider(id: String!): NewsProvider!
   getNewsProviders: [NewsProvider!]!
@@ -30,7 +34,13 @@ type Query {
 }
 
 type Mutation {
+  login(loginInput: LoginInput!): AuthResponse!
   createNewsProvider(name: String!, url: String!): NewsProvider!
   updateNewsProvider(id: String!, name: String!, url: String!): NewsProvider!
   deleteNewsProvider(id: String!): Boolean!
+}
+
+input LoginInput {
+  username: String!
+  password: String!
 }
