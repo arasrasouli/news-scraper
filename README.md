@@ -14,6 +14,7 @@
 </p>
 <a href="https://www.postgresql.org/" target="_blank"> <img src="https://img.shields.io/badge/PostgreSQL-14%2B-blue.svg" alt="PostgreSQL Version" /></a>
 <a href="https://typeorm.io/" target="_blank"> <img src="https://img.shields.io/badge/TypeORM-0.3%2B-orange.svg" alt="TypeORM Version" /></a>
+<a> <img src="https://img.shields.io/badge/Mapper-lightgrey.svg" alt="Custom Mapper" /></a>
 </p>
 
 <a href="https://www.docker.com/" target="_blank"> <img src="https://img.shields.io/badge/Docker-Enabled-blue.svg" alt="Docker" /></a>
@@ -21,7 +22,6 @@
 <a href="https://jestjs.io/" target="_blank"> <img src="https://img.shields.io/badge/Jest-Testing-brightgreen.svg" alt="Jest" /></a>
 <a href="https://eslint.org/" target="_blank"> <img src="https://img.shields.io/badge/ESLint-Linting-purple.svg" alt="ESLint" /></a>
 </p>
-
 
 ## Description
 
