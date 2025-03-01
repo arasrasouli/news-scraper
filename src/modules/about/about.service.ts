@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { AboutModel } from 'src/models/about.model';
+import { AboutDto } from 'src/modules/about/dtos/about.dto';
 
 @Injectable()
 export class AboutService {
-  getAbout(): AboutModel {
+  getAbout(): AboutDto {
     return {
       title: process.env.APP_ABOUT_TITLE || 'Default Title',
       description:
