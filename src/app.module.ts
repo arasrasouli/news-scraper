@@ -3,7 +3,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
-import { NewsProviderModule } from './modules/news-provider/newsProvider.module';
+import { NewsProviderModule } from './modules/news-provider/news-provider.module';
 import { ConfigModule } from '@nestjs/config';
 import { AboutModule } from './modules/about/about.module';
 import { AppController } from './app.controller';
