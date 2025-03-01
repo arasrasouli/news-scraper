@@ -1,16 +1,16 @@
 import { Query, Resolver } from '@nestjs/graphql';
 import { AboutService } from './about.service';
-import { AboutModel } from '../../models/about.model';
+import { AboutDto } from './dtos/about.dto';
 import { UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 
-@Resolver(() => AboutModel)
+@Resolver(() => AboutDto)
 export class AboutResolver {
   constructor(private readonly aboutService: AboutService) {}
 
-  @Query(() => AboutModel)
+  @Query(() => AboutDto)
   @UseGuards(JwtAuthGuard)
-  about(): AboutModel {
+  about(): AboutDto {
     return this.aboutService.getAbout();
   }
 }
