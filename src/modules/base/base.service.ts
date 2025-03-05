@@ -1,40 +1,37 @@
-import { Repository, ObjectLiteral } from 'typeorm';
+import { Repository, ObjectLiteral, DeepPartial } from 'typeorm';
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { IBaseMapper } from './mapper/base.mapper.interface';
+import { IBaseService } from './interface.base.service';
 
 @Injectable()
-export class BaseService<T extends ObjectLiteral, DTO> {
-  constructor(
-    protected readonly repo: Repository<T>,
-    protected readonly mapper: IBaseMapper<T, DTO>,
-  ) { }
+export class BaseService<T extends ObjectLiteral> implements IBaseService<T> {
+  constructor(protected readonly repo: Repository<T>) {}
 
-  async findAll(): Promise<DTO[]> {
-    const entities = await this.repo.find();
-    return entities.map<DTO>((entity) => this.mapper.toDto(entity));
+  async findAll(): Promise<T[]> {
+    return this.repo.find();
   }
 
-  async findOne(id: string): Promise<DTO> {
-    const entity = await this.repo.findOne({ where: { id } } as any);
-    if (!entity) {
-      throw new NotFoundException(`Entity with ID ${id} not found`);
-    }
-    return this.mapper.toDto(entity);
+  async findOne(id: string): Promise<T | null> {
+    const entity = await this.repo.findOne({
+      where: { id: id } as unknown as Partial<T>,
+    });
+    return entity || null;
   }
 
-  async create(dto: DTO): Promise<DTO> {
-    const entity = this.repo.create(this.mapper.fromDto(dto));
-    const savedEntity = await this.repo.save(entity);
-    return this.mapper.toDto(savedEntity);
+  async create(dto: any): Promise<T> {
+    const entity = this.repo.create(dto as DeepPartial<T>);
+    return this.repo.save(entity);
   }
 
-  async update(id: string, dto: Partial<DTO>): Promise<DTO> {
-    const entityData = this.mapper.fromDto(dto as DTO);
-    const updateResult = await this.repo.update(id, entityData);
+  async update(id: string, dto: any): Promise<T> {
+    const updateResult = await this.repo.update(id, dto as Partial<T>);
     if (updateResult.affected === 0) {
       throw new NotFoundException(`Entity with ID ${id} not found`);
     }
-    return this.findOne(id);
+    const updatedEntity = await this.findOne(id);
+    if (!updatedEntity) {
+      throw new NotFoundException(`Entity with ID ${id} not found after update`);
+    }
+    return updatedEntity;
   }
 
   async delete(id: string): Promise<boolean> {
