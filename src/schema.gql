@@ -2,13 +2,12 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type NewsProviderResponseDto {
+type NewsProvider {
   id: ID!
   isActive: Boolean!
   isDeleted: Boolean!
   createDate: DateTime!
   modifyDate: DateTime!
-  deletedAt: DateTime
   name: String!
   url: String!
 }
@@ -29,15 +28,15 @@ type AuthResponse {
 }
 
 type Query {
-  getNewsProvider(id: String!): NewsProviderResponseDto!
-  getNewsProviders: [NewsProviderResponseDto!]!
+  getNewsProvider(id: String!): NewsProvider
+  getNewsProviders: [NewsProvider!]!
   about: AboutDto!
 }
 
 type Mutation {
   login(loginInput: LoginInput!): AuthResponse!
-  createNewsProvider(createNewsProviderDto: CreateNewsProviderDto!): NewsProviderResponseDto!
-  updateNewsProvider(id: String!, updateNewsProviderDto: UpdateNewsProviderDto!): NewsProviderResponseDto!
+  createNewsProvider(createNewsProviderDto: CreateNewsProviderDto!): NewsProvider!
+  updateNewsProvider(id: String!, updateNewsProviderDto: UpdateNewsProviderDto!): NewsProvider!
   deleteNewsProvider(id: String!): Boolean!
 }
 

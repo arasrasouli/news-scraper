@@ -35,7 +35,8 @@ import { AuthModule } from './auth/auth.module';
       synchronize: true ,
       dropSchema: process.env.NODE_ENV === 'test',
       autoLoadEntities: true,
-      logging: process.env.NODE_ENV === 'development' ? ['query', 'error'] : ['error'],
+      logging:
+        process.env.NODE_ENV === 'development' ? ['query', 'error'] : ['error'],
     }),
     NewsProviderModule,
     AboutModule,
