@@ -9,8 +9,10 @@ import { AboutModule } from './modules/about/about.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { validate } from './env.validation'; 
-import { NewsProvider } from './database/entities/newsProvider.entity';
+import { NewsProvider } from './database/entities/news-provider.entity';
 import { AuthModule } from './auth/auth.module';
+import { NewsPattern } from './database/entities/news-pattern.entity';
+import { NewsPatternModule } from './modules/news-pattern/news-pattern.module';
 
 @Module({
   imports: [
@@ -31,7 +33,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [NewsProvider],
+      entities: [NewsProvider, NewsPattern],
       synchronize: true ,
       dropSchema: process.env.NODE_ENV === 'test',
       autoLoadEntities: true,
@@ -39,6 +41,7 @@ import { AuthModule } from './auth/auth.module';
         process.env.NODE_ENV === 'development' ? ['query', 'error'] : ['error'],
     }),
     NewsProviderModule,
+    NewsPatternModule,
     AboutModule,
     AuthModule,
   ],

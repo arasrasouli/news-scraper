@@ -2,6 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type NewsPattern {
+  id: ID!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  createDate: DateTime!
+  modifyDate: DateTime!
+  columnSelector: String!
+  titleSelector: String!
+  linkSelector: String!
+  newsProvider: NewsProvider!
+  newsProviderId: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type NewsProvider {
   id: ID!
   isActive: Boolean!
@@ -10,12 +28,10 @@ type NewsProvider {
   modifyDate: DateTime!
   name: String!
   url: String!
-}
 
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
+  """List of news patterns"""
+  newsPatterns: [NewsPattern!]
+}
 
 type AboutDto {
   title: String!
@@ -28,8 +44,10 @@ type AuthResponse {
 }
 
 type Query {
-  getNewsProvider(id: String!): NewsProvider
+  getNewsProvider(id: String!): NewsProvider!
   getNewsProviders: [NewsProvider!]!
+  getNewsPattern(id: String!): NewsPattern!
+  getNewsPatterns: [NewsPattern!]!
   about: AboutDto!
 }
 
@@ -38,6 +56,9 @@ type Mutation {
   createNewsProvider(createNewsProviderDto: CreateNewsProviderDto!): NewsProvider!
   updateNewsProvider(id: String!, updateNewsProviderDto: UpdateNewsProviderDto!): NewsProvider!
   deleteNewsProvider(id: String!): Boolean!
+  createNewsPattern(createNewsPatternDto: CreateNewsPatternDto!): NewsPattern!
+  updateNewsPattern(id: String!, updateNewsPatternDto: UpdateNewsPatternDto!): NewsPattern!
+  deleteNewsPattern(id: String!): Boolean!
 }
 
 input LoginInput {
@@ -59,4 +80,32 @@ input UpdateNewsProviderDto {
   deletedAt: DateTime
   name: String
   url: String
+}
+
+input CreateNewsPatternDto {
+  """CSS selector for the news column"""
+  columnSelector: String!
+
+  """CSS selector for news item titles"""
+  titleSelector: String!
+
+  """CSS selector for news item links"""
+  linkSelector: String!
+
+  """UUID of the associated NewsProvider"""
+  newsProviderId: String!
+}
+
+input UpdateNewsPatternDto {
+  """CSS selector for the news column"""
+  columnSelector: String
+
+  """CSS selector for news item titles"""
+  titleSelector: String
+
+  """CSS selector for news item links"""
+  linkSelector: String
+
+  """UUID of the associated NewsProvider"""
+  newsProviderId: String
 }
