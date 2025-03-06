@@ -1,19 +1,23 @@
 import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
 import { NewsProviderService } from './news-provider.service';
-import { NewsProvider } from '../../database/entities/newsProvider.entity';
-import { UseGuards } from '@nestjs/common';
+import { NewsProvider } from '../../database/entities/news-provider.entity';
+import { NotFoundException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { UpdateNewsProviderDto } from './dtos/update-news-provider.dto';
 import { CreateNewsProviderDto } from './dtos/create-news-provider.dto';
 
 @Resolver(() => NewsProvider)
 export class NewsProviderResolver {
-  constructor(private newsProviderService: NewsProviderService) {}
+  constructor(private readonly newsProviderService: NewsProviderService) {}
 
-  @Query(() => NewsProvider, { nullable: true })
+  @Query(() => NewsProvider, { name: 'getNewsProvider' })
   @UseGuards(JwtAuthGuard)
-  async getNewsProvider(@Args('id') id: string): Promise<NewsProvider | null> {
-    return this.newsProviderService.findOne(id);
+  async getNewsProvider(@Args('id', { type: () => String }) id: string): Promise<NewsProvider> {
+    const entity = await this.newsProviderService.findOne(id);
+    if (!entity) {
+      throw new NotFoundException(`NewsProvider with ID ${id} not found`);
+    }
+    return entity;
   }
 
   @Query(() => [NewsProvider])
