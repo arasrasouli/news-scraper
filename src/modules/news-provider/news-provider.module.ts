@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { NewsProvider } from '../../database/entities/newsProvider.entity';
+import { NewsProvider } from '../../database/entities/news-provider.entity';
 import { NewsProviderService } from './news-provider.service';
 import { NewsProviderResolver } from './news-provider.resolver';
 
