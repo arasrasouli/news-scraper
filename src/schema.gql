@@ -20,6 +20,36 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+type Topic {
+  id: ID!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  createDate: DateTime!
+  modifyDate: DateTime!
+  name: String!
+  expireDate: DateTime
+  tags: [String!]
+  newsArticles: [NewsArticle!]
+  isValid: Boolean!
+}
+
+type NewsArticle {
+  id: ID!
+  isActive: Boolean!
+  isDeleted: Boolean!
+  createDate: DateTime!
+  modifyDate: DateTime!
+  title: String!
+  url: String!
+  summary: String
+  publishedAt: DateTime
+  imageUrl: String
+  tags: [String!]
+  newsProvider: NewsProvider!
+  newsProviderId: String!
+  topics: [Topic!]
+}
+
 type NewsProvider {
   id: ID!
   isActive: Boolean!
@@ -29,8 +59,8 @@ type NewsProvider {
   name: String!
   url: String!
 
-  """List of news patterns"""
-  newsPatterns: [NewsPattern!]
+  """List of news articles"""
+  newsPatterns: [NewsArticle!]
 }
 
 type AboutDto {
@@ -48,6 +78,8 @@ type Query {
   getNewsProviders: [NewsProvider!]!
   getNewsPattern(id: String!): NewsPattern!
   getNewsPatterns: [NewsPattern!]!
+  getTopic(id: String!): Topic!
+  getTopics: [Topic!]!
   about: AboutDto!
 }
 
@@ -59,6 +91,9 @@ type Mutation {
   createNewsPattern(createNewsPatternDto: CreateNewsPatternDto!): NewsPattern!
   updateNewsPattern(id: String!, updateNewsPatternDto: UpdateNewsPatternDto!): NewsPattern!
   deleteNewsPattern(id: String!): Boolean!
+  createTopic(createTopicDto: CreateTopicDto!): Topic!
+  updateTopic(id: String!, updateTopicDto: UpdateTopicDto!): Topic!
+  deleteTopic(id: String!): Boolean!
 }
 
 input LoginInput {
@@ -108,4 +143,15 @@ input UpdateNewsPatternDto {
 
   """UUID of the associated NewsProvider"""
   newsProviderId: String
+}
+
+input CreateTopicDto {
+  name: String!
+  tags: [String!]
+}
+
+input UpdateTopicDto {
+  name: String!
+  tags: [String!]
+  expireDate: DateTime
 }

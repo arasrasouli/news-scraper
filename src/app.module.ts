@@ -13,6 +13,9 @@ import { NewsProvider } from './database/entities/news-provider.entity';
 import { AuthModule } from './auth/auth.module';
 import { NewsPattern } from './database/entities/news-pattern.entity';
 import { NewsPatternModule } from './modules/news-pattern/news-pattern.module';
+import { TopicModule } from './modules/topic/topic.module';
+import { Topic } from './database/entities/topic.entity';
+import { NewsArticle } from './database/entities/news-article.entity';
 
 @Module({
   imports: [
@@ -33,7 +36,7 @@ import { NewsPatternModule } from './modules/news-pattern/news-pattern.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      entities: [NewsProvider, NewsPattern],
+      entities: [NewsProvider, NewsPattern, Topic, NewsArticle],
       synchronize: true ,
       dropSchema: process.env.NODE_ENV === 'test',
       autoLoadEntities: true,
@@ -42,6 +45,7 @@ import { NewsPatternModule } from './modules/news-pattern/news-pattern.module';
     }),
     NewsProviderModule,
     NewsPatternModule,
+    TopicModule,
     AboutModule,
     AuthModule,
   ],
