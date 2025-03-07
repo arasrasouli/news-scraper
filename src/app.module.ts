@@ -16,6 +16,7 @@ import { NewsPatternModule } from './modules/news-pattern/news-pattern.module';
 import { TopicModule } from './modules/topic/topic.module';
 import { Topic } from './database/entities/topic.entity';
 import { NewsArticle } from './database/entities/news-article.entity';
+import { NewsArticleModule } from './modules/news-article/news-article.module';
 
 @Module({
   imports: [
@@ -46,6 +47,7 @@ import { NewsArticle } from './database/entities/news-article.entity';
     NewsProviderModule,
     NewsPatternModule,
     TopicModule,
+    NewsArticleModule,
     AboutModule,
     AuthModule,
   ],
