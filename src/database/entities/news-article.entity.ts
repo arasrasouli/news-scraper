@@ -44,4 +44,8 @@ export class NewsArticle extends CommonEntity {
   @JoinTable()
   @Field(() => [Topic], { nullable: true })
   topics?: Topic[];
+
+  @Field(() => Boolean)
+  @Column({ default: false })
+  isProcessed: boolean;
 }
