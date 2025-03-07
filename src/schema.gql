@@ -48,6 +48,7 @@ type NewsArticle {
   newsProvider: NewsProvider!
   newsProviderId: String!
   topics: [Topic!]
+  isProcessed: Boolean!
 }
 
 type NewsProvider {
@@ -80,6 +81,8 @@ type Query {
   getNewsPatterns: [NewsPattern!]!
   getTopic(id: String!): Topic!
   getTopics: [Topic!]!
+  getNewsArticle(id: String!): NewsArticle!
+  getNewsArticles: [NewsArticle!]!
   about: AboutDto!
 }
 
@@ -94,6 +97,9 @@ type Mutation {
   createTopic(createTopicDto: CreateTopicDto!): Topic!
   updateTopic(id: String!, updateTopicDto: UpdateTopicDto!): Topic!
   deleteTopic(id: String!): Boolean!
+  createNewsArticle(createNewsArticleDto: CreateNewsArticleDto!): NewsArticle!
+  updateNewsArticle(id: String!, updateNewsArticleDto: UpdateNewsArticleDto!): NewsArticle!
+  deleteNewsArticle(id: String!): Boolean!
 }
 
 input LoginInput {
@@ -154,4 +160,23 @@ input UpdateTopicDto {
   name: String!
   tags: [String!]
   expireDate: DateTime
+}
+
+input CreateNewsArticleDto {
+  title: String!
+  url: String!
+  summary: String
+  publishedAt: DateTime
+  imageUrl: String
+  tags: [String!]
+  newsProviderId: String!
+}
+
+input UpdateNewsArticleDto {
+  title: String
+  summary: String
+  publishedAt: DateTime
+  imageUrl: String
+  tags: [String!]
+  isProcessed: Boolean
 }
