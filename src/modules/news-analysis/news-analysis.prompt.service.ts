@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { getAnalyzeSystemPrompt } from './news-article.prompts';
+import { getAnalyzeSystemPrompt } from './prompts';
 
 @Injectable()
-export class NewsArticlePromptService {
+export class NewsAnalysisPromptService {
   constructor(private readonly configService: ConfigService) {}
 
   getAnalyzeSystemPrompt(): string {

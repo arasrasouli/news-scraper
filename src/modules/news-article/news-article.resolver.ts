@@ -5,11 +5,15 @@ import { NotFoundException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { CreateNewsArticleDto } from './dtos/create-news-article.dto';
 import { UpdateNewsArticleDto } from './dtos/update-news-article.dto';
-import { AnalyzeArticleInputDto, AnalyzeArticleResultDto } from './dtos/analyze-article.dto';
+import { AnalyzeArticleInputDto, AnalyzeArticleResultDto } from '../news-analysis/dtos/analyze-article.dto';
+import { NewsAnalysisService } from '../news-analysis/news-analysis.service';
 
 @Resolver(() => NewsArticle)
 export class NewsArticleResolver {
-  constructor(private readonly newsArticleService: NewsArticleService) {}
+  constructor(
+    private readonly newsArticleService: NewsArticleService,
+    private readonly newsAnalysisService: NewsAnalysisService,
+  ) {}
 
   @Query(() => NewsArticle)
   @UseGuards(JwtAuthGuard)
@@ -55,6 +59,12 @@ export class NewsArticleResolver {
   async analyzeArticle(
     @Args('input') input: AnalyzeArticleInputDto,
   ): Promise<AnalyzeArticleResultDto> {
-    return this.newsArticleService.analyzeArticle(input);
+    const result = await this.newsAnalysisService.analyzeArticle(input);
+    return {
+      topic: result.topic,
+      hashtags: result.hashtags,
+      biasDirection: result.biasDirection,
+      summary: result.summary,
+    };
   }
 }
