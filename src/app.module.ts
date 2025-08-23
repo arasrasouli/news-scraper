@@ -17,6 +17,7 @@ import { TopicModule } from './modules/topic/topic.module';
 import { Topic } from './database/entities/topic.entity';
 import { NewsArticle } from './database/entities/news-article.entity';
 import { NewsArticleModule } from './modules/news-article/news-article.module';
+import { AnalysisModule } from './modules/analysis/analysis.module';
 
 @Module({
   imports: [
@@ -50,6 +51,7 @@ import { NewsArticleModule } from './modules/news-article/news-article.module';
     NewsArticleModule,
     AboutModule,
     AuthModule,
+    AnalysisModule,
   ],
   controllers: [AppController],
   providers: [AppService],
