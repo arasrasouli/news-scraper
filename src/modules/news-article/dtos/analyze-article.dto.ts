@@ -1,5 +1,5 @@
 import { Field, InputType, ObjectType } from '@nestjs/graphql';
-import { IsArray, IsOptional, IsString, MaxLength } from 'class-validator';
+import { IsArray, IsOptional, IsString, MaxLength, IsNotEmpty } from 'class-validator';
 
 @InputType()
 export class AnalyzeArticleInputDto {
@@ -14,6 +14,7 @@ export class AnalyzeArticleInputDto {
 
   @Field()
   @IsString()
+  @IsNotEmpty()
   bias: string;
 }
 

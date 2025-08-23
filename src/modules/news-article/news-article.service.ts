@@ -20,6 +20,10 @@ export class NewsArticleService extends BaseService<NewsArticle> {
   async analyzeArticle(input: AnalyzeArticleInputDto): Promise<AnalyzeArticleResultDto> {
     const { link, title, bias } = input;
 
+    if (!bias || bias.trim().length === 0) {
+      throw new Error('bias must be a non-empty string');
+    }
+
     // Fetch page content
     const response = await request(link, {
       headers: { 'user-agent': 'news-analyzer/1.0 (+https://example.com)' },
