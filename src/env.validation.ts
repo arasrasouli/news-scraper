@@ -1,4 +1,4 @@
-import { IsString, IsNumber, validateSync } from 'class-validator';
+import { IsString, IsNumber, IsOptional, validateSync } from 'class-validator';
 import { plainToClass } from 'class-transformer';
 
 class EnvironmentVariables {
@@ -19,6 +19,15 @@ class EnvironmentVariables {
 
   @IsString()
   NODE_ENV: string;
+
+  // OpenAI configuration
+  @IsString()
+  @IsOptional()
+  OPENAI_API_KEY?: string;
+
+  @IsString()
+  @IsOptional()
+  OPENAI_MODEL?: string;
 }
 
 export function validate(config: Record<string, unknown>) {
