@@ -7,12 +7,14 @@ import OpenAI from 'openai';
 import * as cheerio from 'cheerio';
 import { request } from 'undici';
 import { AnalyzeArticleInputDto, AnalyzeArticleResultDto } from './dtos/analyze-article.dto';
+import { NewsArticlePromptService } from './news-article.prompt.service';
 
 @Injectable()
 export class NewsArticleService extends BaseService<NewsArticle> {
   constructor(
     @InjectRepository(NewsArticle)
     private readonly articleRepo: Repository<NewsArticle>,
+    private readonly promptService: NewsArticlePromptService,
   ) {
     super(articleRepo);
   }
@@ -42,13 +44,7 @@ export class NewsArticleService extends BaseService<NewsArticle> {
 
     const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-    const systemPrompt = `You are a strict JSON API. Analyze a news article in context of a user-provided bias (stance). Return a compact JSON with the following fields: topic (string, 2-6 words), hashtags (array of 3-6 Twitter-style tags, lowercase, no spaces, prefixed with #), biasDirection (one of: positive, negative, irrelevant), summary (<= 40 words).
-Rules:
-- Determine biasDirection by comparing article's sentiment/perspective toward the provided bias (stance).
-- positive: article supports or favors the bias.
-- negative: article opposes or criticizes the bias.
-- irrelevant: article content is not materially about the bias or insufficient context.
-- Do not include any extra fields or commentary.`;
+    const systemPrompt = this.promptService.getAnalyzeSystemPrompt();
 
     const userPrompt = `Article title: ${title}\nBias (stance): ${bias}\nURL: ${link}\n---\nArticle excerpt:\n${articleText}`;
 
