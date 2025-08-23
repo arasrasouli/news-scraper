@@ -5,6 +5,7 @@ import { NotFoundException, UseGuards } from '@nestjs/common';
 import { JwtAuthGuard } from '../../auth/guards/jwt-auth.guard';
 import { CreateNewsArticleDto } from './dtos/create-news-article.dto';
 import { UpdateNewsArticleDto } from './dtos/update-news-article.dto';
+import { AnalyzeArticleInputDto, AnalyzeArticleResultDto } from './dtos/analyze-article.dto';
 
 @Resolver(() => NewsArticle)
 export class NewsArticleResolver {
@@ -47,5 +48,13 @@ export class NewsArticleResolver {
   @UseGuards(JwtAuthGuard)
   async deleteNewsArticle(@Args('id') id: string): Promise<boolean> {
     return this.newsArticleService.delete(id);
+  }
+
+  @Mutation(() => AnalyzeArticleResultDto)
+  @UseGuards(JwtAuthGuard)
+  async analyzeArticle(
+    @Args('input') input: AnalyzeArticleInputDto,
+  ): Promise<AnalyzeArticleResultDto> {
+    return this.newsArticleService.analyzeArticle(input);
   }
 }
